@@ -1,5 +1,6 @@
 import pages from './pages';
 
 export const getPagesListRequest = async () => {
-    return pages;
+    const {entities, topLevelIds} = pages;
+    return {...entities, topLevelIds};
 };

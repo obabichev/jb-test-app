@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import {NavigationTree} from '../NavigationTree/NavigationTree';
 import {getPagesListRequest} from '../../service/pagesService';
-import {setPagesData} from '../../actions/pages/pages.actions';
+
+import './MainPage.css';
 
 export class MainPage extends Component {
 
     componentDidMount() {
         getPagesListRequest()
-            .then(pagesData => setPagesData(pagesData));
+            .then((pagesData) => this.props.setPagesData(pagesData));
     }
 
     render() {
-        return <div>
-            <NavigationTree/>
+        return <div className="main_page_container">
+            <NavigationTree data={this.props.pagesStructure}/>
             <div></div>
         </div>;
     }

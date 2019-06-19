@@ -1,11 +1,11 @@
 import React from 'react';
-import {MainPage} from './components/MainPage/MainPage';
 import {Store} from './components/Store/Store';
+import {MainPageContainer} from './containers/MainPageContainer';
 
 function App() {
     return (
         <Store>
-            <MainPage/>
+            <MainPageContainer/>
         </Store>
     );
 }

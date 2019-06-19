@@ -1,6 +1,6 @@
 import {topLevelIds} from './topLevelIds';
 import {TEST_PAGES_DATA} from '../../tests/pages/testPagesData';
-import {setPagesData} from '../../actions/pages/pages.actions';
+import {setPagesDataAction} from '../../actions/pages/pages.actions';
 
 describe('TopLevelIds reducer', () => {
 
@@ -9,7 +9,7 @@ describe('TopLevelIds reducer', () => {
     });
 
     it('SetPagesData action', () => {
-        expect(topLevelIds(undefined, setPagesData(TEST_PAGES_DATA)))
+        expect(topLevelIds(undefined, setPagesDataAction(TEST_PAGES_DATA)))
             .toEqual(TEST_PAGES_DATA.topLevelIds);
     });
 
