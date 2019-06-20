@@ -3,30 +3,47 @@ import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 
 import './MenuItemComponent.css';
-import {MenuAnchorContainer} from '../../containers/MenuAnchorContainer';
+import {MenuAnchorContainer} from '../../../containers/menu/MenuAnchorContainer';
 
 export class MenuItemComponent extends Component {
 
     render() {
-        const {title, url} = this.props.menuItem;
-        const {isSelected} = this.props;
+        return <div>
+            <div>
+                {this.renderContent()}
+            </div>
+            <div>
+                {this.renderAnchors()}
+            </div>
+        </div>
+    }
 
-        const selectedMSG = isSelected ? '(SELECTED)' : '';
-
+    renderContent = () => {
+        const {url} = this.props.menuItem;
         if (url) {
             return <div>
-                <Link onClick={this.onClick} className="menu_item_component_title" to={url}>
-                    {selectedMSG} {title}
+                <Link onClick={this.onClick} className={this.titleClassName()} to={url}>
+                    {this.renderCard()}
                 </Link>
-                {this.renderAnchors()}
             </div>;
         } else {
-            return <div onClick={this.onClick} className="menu_item_component_title">
-                {selectedMSG} {title}
-                {this.renderAnchors()}
+            return <div onClick={this.onClick} className={this.titleClassName()}>
+                {this.renderCard()}
             </div>;
         }
-    }
+    };
+
+    titleClassName = () => {
+        const {isSelected} = this.props;
+
+        return `menu_item_component_title ${isSelected ? 'menu_item_component__selected_title' : ''}`;
+    };
+
+    renderCard = () => {
+        const {title} = this.props.menuItem;
+
+        return title;
+    };
 
     renderAnchors = () => {
         const {anchors, isSelected} = this.props;
@@ -68,5 +85,5 @@ MenuItemComponent.propTypes = {
     setExpanded: PropTypes.func,
     setCurrentPage: PropTypes.func,
     setCurrentAnchor: PropTypes.func,
-    anchors: PropTypes.array.isRequired
+    anchors: PropTypes.array.isRequired,
 };

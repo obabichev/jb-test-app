@@ -22,6 +22,6 @@ describe('Pages selectors', () => {
     it('pageByPageIdSelector', () => {
         const props = {pageId: "p2"};
         expect(pageByPageIdSelector(state, props))
-            .toEqual({id: "p2"});
+            .toEqual({id: "p2", level: 1});
     });
 });

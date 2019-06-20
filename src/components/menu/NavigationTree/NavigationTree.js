@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
 
-import {TreeViewComponent} from '../tree/TreeViewComponent';
-import {MenuItemContainer} from '../../containers/MenuItemContainer';
+import {TreeViewComponent} from '../../tree/TreeViewComponent';
+import {MenuItemContainer} from '../../../containers/menu/MenuItemContainer';
 
 import './NavigationTree.css';
 
 export class NavigationTree extends Component {
 
     render() {
+        console.log('[obabichev] this.props', this.props);
         return <div className="navigation_tree_container">
             <TreeViewComponent data={this.props.data}
-                               renderItem={this.renderMenuItem}/>
+                               renderItem={this.renderMenuItem}
+                               selectedItem={this.props.selectedMenuItem}/>
         </div>;
     }
 

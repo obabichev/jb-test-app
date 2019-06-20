@@ -4,7 +4,7 @@ import {ExpandButton} from './ExpandButton';
 export const ExpandButtonWrapper = props => (
     <div>
         <div style={{display: 'flex', flexDirection: 'row'}}>
-            <div style={{width: 14, height: 32, cursor: "pointer"}}>
+            <div>
                 <ExpandButton {...props}/>
             </div>
             <div>

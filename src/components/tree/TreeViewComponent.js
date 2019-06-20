@@ -19,12 +19,15 @@ export class TreeViewComponent extends Component {
         return <TreeNodeComponent
             key={item.id}
             id={item.id}
+            level={item.level}
             children={item.children}
-            renderItem={this.props.renderItem}/>
+            renderItem={this.props.renderItem}
+            selectedItem={this.props.selectedItem}/>
     }
 }
 
 TreeViewComponent.propTypes = {
     data: PropTypes.array.isRequired,
     renderItem: PropTypes.func.isRequired,
+    selectedItem: PropTypes.string
 };

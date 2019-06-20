@@ -12,10 +12,12 @@ export const pagesStructureSelector = createSelector(
 const createTreeStructure = pages => id => {
     const page = pages[id];
 
+    const level = page.level;
+
     if (!page.pages) {
-        return {id};
+        return {id, level};
     }
 
     const children = page.pages.map(createTreeStructure(pages));
-    return {id, children};
+    return {id, level, children};
 };

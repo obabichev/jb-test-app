@@ -1,8 +1,8 @@
 import {connect} from 'react-redux';
-import {MenuAnchorComponent} from '../components/MenuItemComponent/MenuAnchorComponent';
-import {anchorByAnchorIdSelector} from '../selectors/pages/anchors';
-import {setCurrentAnchorAction} from '../actions/navigation/navigation.actions';
-import {isAnchorSelectedSelector} from '../selectors/navigation/navigation';
+import {MenuAnchorComponent} from '../../components/menu/MenuAnchorComponent/MenuAnchorComponent';
+import {anchorByAnchorIdSelector} from '../../selectors/pages/anchors';
+import {setCurrentAnchorAction} from '../../actions/navigation/navigation.actions';
+import {isAnchorSelectedSelector} from '../../selectors/navigation/navigation';
 
 const mapStateToProps = (state, props) => ({
     anchor: anchorByAnchorIdSelector(state, props),

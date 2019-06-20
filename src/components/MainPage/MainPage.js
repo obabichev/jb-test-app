@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {NavigationTree} from '../NavigationTree/NavigationTree';
+import {NavigationTree} from '../menu/NavigationTree/NavigationTree';
 import {getPagesListRequest} from '../../service/pagesService';
 
 import './MainPage.css';

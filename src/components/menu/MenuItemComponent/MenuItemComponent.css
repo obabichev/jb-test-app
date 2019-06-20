@@ -7,6 +7,12 @@
     line-height: 19px;
 }
 
+.menu_item_component__selected_title {
+    letter-spacing: -.55px;
+    font-weight: 700;
+}
+
 .menu_item_component_title:hover {
     text-decoration: underline;
 }
+

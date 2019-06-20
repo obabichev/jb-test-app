@@ -11,13 +11,13 @@ export class TreeNodeComponent extends Component {
         super(props);
 
         this.state = {
-            collapsed: true
+            isExtended: false,
         }
     }
 
     render() {
-        return <div style={{paddingLeft: 30}}>
-            <div>
+        return <div>
+            <div style={this.contentStyles()}>
                 {this.renderContent()}
             </div>
             <div>
@@ -26,29 +26,43 @@ export class TreeNodeComponent extends Component {
         </div>;
     }
 
+    contentStyles = () => {
+        const {id, selectedItem, level} = this.props;
+
+        const style = {paddingLeft: 10 * level};
+
+        if (id === selectedItem) {
+            return {...style, backgroundColor: '#E6E6E6'};
+        }
+
+        return style;
+    };
+
     renderContent = () => {
-        if (this.isCollapsible()) {
+        if (this.isExtendable()) {
             return <ExpandButtonWrapper
-                isExtended={this.state.collapsed}
+                isExtended={this.state.isExtended}
                 onExtendedToggle={this.onExtendedToggle}>
                 {this.renderCard()}
             </ExpandButtonWrapper>;
         }
 
-        return this.renderCard();
+        return <div style={{paddingLeft: 23}}>
+            {this.renderCard()}
+        </div>;
     };
 
     renderCard = () => {
         const {id, renderItem} = this.props;
 
-        return renderItem(id, this.setExpanded);
+        return renderItem(id, this.setExpanded)
     };
 
     renderChildren = () => {
-        const {collapsed} = this.state;
+        const {isExtended} = this.state;
         const {children} = this.props;
 
-        if (collapsed) {
+        if (!isExtended) {
             return null;
         }
 
@@ -64,24 +78,27 @@ export class TreeNodeComponent extends Component {
             key={item.id}
             id={item.id}
             children={item.children}
-            renderItem={this.props.renderItem}/>
+            renderItem={this.props.renderItem}
+            selectedItem={this.props.selectedItem}
+            level={item.level}/>
     };
 
-    isCollapsible = () => {
+    isExtendable = () => {
         return !!this.props.children;
     };
 
     onExtendedToggle = () => {
-        this.setState({collapsed: !this.state.collapsed});
+        this.setState({isExtended: !this.state.isExtended});
     };
 
-    setExpanded = isExpanded => {
-        this.setState({collapsed: !isExpanded});
+    setExpanded = isExtended => {
+        this.setState({isExtended});
     };
 }
 
 TreeNodeComponent.propTypes = {
     id: PropTypes.string.isRequired,
     children: PropTypes.array,
-    renderItem: PropTypes.func.isRequired
+    renderItem: PropTypes.func.isRequired,
+    level: PropTypes.number
 };
