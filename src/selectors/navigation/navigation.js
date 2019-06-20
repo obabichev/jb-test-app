@@ -1,9 +1,10 @@
 import {createSelector} from 'reselect';
 import {pagesSelector} from '../pages/pages';
+import {anchorIdPropSelector, pageIdPropSelector} from '../pages/props';
 
-export const selectedMenuItemSelector = (state) => state.navigation.selectedPage;
+export const selectedMenuItemSelector = (state) => state.navigation.selectedPage.pageId;
 
-export const pageIdPropSelector = (_, props) => props.pageId;
+export const selectedAnchorSelector = (state) => state.navigation.selectedPage.anchorId;
 
 export const menuItemByPageIdSelector = createSelector(
     pageIdPropSelector,
@@ -34,5 +35,13 @@ export const pageIdByUrlSelector = createSelector(
             }
         }
         return null;
+    }
+);
+
+export const isAnchorSelectedSelector = createSelector(
+    anchorIdPropSelector,
+    selectedAnchorSelector,
+    (anchorId, selectedAnchorId) => {
+        return anchorId === selectedAnchorId;
     }
 );

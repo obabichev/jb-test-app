@@ -1,5 +1,5 @@
 import {TEST_PAGES_DATA} from '../../tests/pages/testPagesData';
-import {pagesSelector, topLevelIdsSelector} from './pages';
+import {pageByPageIdSelector, pagesSelector, topLevelIdsSelector} from './pages';
 
 const state = {
     pages: {
@@ -17,5 +17,11 @@ describe('Pages selectors', () => {
     it('topLevelIdsSelector return correct data', () => {
         expect(topLevelIdsSelector(state))
             .toEqual(TEST_PAGES_DATA.topLevelIds);
+    });
+
+    it('pageByPageIdSelector', () => {
+        const props = {pageId: "p2"};
+        expect(pageByPageIdSelector(state, props))
+            .toEqual({id: "p2"});
     });
 });

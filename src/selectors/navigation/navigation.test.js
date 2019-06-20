@@ -1,8 +1,16 @@
-import {menuItemByPageIdSelector, pageIdByUrlSelector, selectedMenuItemSelector} from './navigation';
+import {
+    isAnchorSelectedSelector,
+    menuItemByPageIdSelector,
+    pageIdByUrlSelector,
+    selectedMenuItemSelector
+} from './navigation';
 
 const state = {
     navigation: {
-        selectedPage: "test-selected-page-id"
+        selectedPage: {
+            pageId: "test-selected-page-id",
+            anchorId: "test-selected-anchor-id"
+        }
     },
     pages: {
         pages: {
@@ -39,5 +47,15 @@ describe('Navigation selector', () => {
     it('pageIdByUrlSelector, check for empty url', () => {
         expect(pageIdByUrlSelector(state, {}))
             .toEqual(null);
+    });
+
+    it('isAnchorSelectedSelector, right id', () => {
+        expect(isAnchorSelectedSelector(state, {anchorId: "test-selected-anchor-id"}))
+            .toEqual(true);
+    });
+
+    it('isAnchorSelectedSelector, wrong id', () => {
+        expect(isAnchorSelectedSelector(state, {anchorId: "wrong-id"}))
+            .toEqual(false);
     });
 });

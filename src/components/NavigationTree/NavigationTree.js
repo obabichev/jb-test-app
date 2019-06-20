@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
 
-import './NavigationTree.css';
 import {TreeViewComponent} from '../tree/TreeViewComponent';
 import {MenuItemContainer} from '../../containers/MenuItemContainer';
+
+import './NavigationTree.css';
 
 export class NavigationTree extends Component {
 
     render() {
         return <div className="navigation_tree_container">
             <TreeViewComponent data={this.props.data}
-                               renderItem={this.renderMenuItem}
-                               selectedItem={this.props.selectedPageId}/>
+                               renderItem={this.renderMenuItem}/>
         </div>;
     }
 
-    renderMenuItem = (pageId, isSelected, setExpanded) => {
+    renderMenuItem = (pageId, setExpanded) => {
         const {selectedMenuItem} = this.props;
         return <MenuItemContainer
             pageId={pageId}

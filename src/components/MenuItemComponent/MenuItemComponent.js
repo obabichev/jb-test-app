@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 
 import './MenuItemComponent.css';
+import {MenuAnchorContainer} from '../../containers/MenuAnchorContainer';
 
 export class MenuItemComponent extends Component {
 
@@ -17,13 +18,33 @@ export class MenuItemComponent extends Component {
                 <Link onClick={this.onClick} className="menu_item_component_title" to={url}>
                     {selectedMSG} {title}
                 </Link>
+                {this.renderAnchors()}
             </div>;
         } else {
             return <div onClick={this.onClick} className="menu_item_component_title">
                 {selectedMSG} {title}
+                {this.renderAnchors()}
             </div>;
         }
     }
+
+    renderAnchors = () => {
+        const {anchors, isSelected} = this.props;
+
+        if (!isSelected) {
+            return null;
+        }
+
+        if (anchors.length === 0) {
+            return null;
+        }
+
+        return anchors.map(this.renderAnchor)
+    };
+
+    renderAnchor = anchor => {
+        return <MenuAnchorContainer key={anchor.id} anchorId={anchor.id}/>;
+    };
 
     onClick = () => {
         const {setExpanded, setCurrentPage} = this.props;
@@ -34,7 +55,7 @@ export class MenuItemComponent extends Component {
         if (setExpanded) {
             setExpanded(true);
         }
-    }
+    };
 }
 
 MenuItemComponent.propTypes = {
@@ -45,5 +66,7 @@ MenuItemComponent.propTypes = {
     }),
     isSelected: PropTypes.bool,
     setExpanded: PropTypes.func,
-    setCurrentPage: PropTypes.func
+    setCurrentPage: PropTypes.func,
+    setCurrentAnchor: PropTypes.func,
+    anchors: PropTypes.array.isRequired
 };

@@ -41,9 +41,7 @@ export class TreeNodeComponent extends Component {
     renderCard = () => {
         const {id, renderItem} = this.props;
 
-        const isSelected = this.isSelected();
-
-        return renderItem(id, isSelected, this.setExpanded);
+        return renderItem(id, this.setExpanded);
     };
 
     renderChildren = () => {
@@ -66,8 +64,7 @@ export class TreeNodeComponent extends Component {
             key={item.id}
             id={item.id}
             children={item.children}
-            renderItem={this.props.renderItem}
-            selectedItem={this.props.selectedItem}/>
+            renderItem={this.props.renderItem}/>
     };
 
     isCollapsible = () => {
@@ -79,20 +76,12 @@ export class TreeNodeComponent extends Component {
     };
 
     setExpanded = isExpanded => {
-        console.log('[obabichev] TROLOLO', isExpanded);
         this.setState({collapsed: !isExpanded});
     };
-
-    isSelected = () => {
-        const {id, selectedItem} = this.props;
-
-        return id === selectedItem;
-    }
 }
 
 TreeNodeComponent.propTypes = {
     id: PropTypes.string.isRequired,
     children: PropTypes.array,
-    renderItem: PropTypes.func.isRequired,
-    selectedItem: PropTypes.string
+    renderItem: PropTypes.func.isRequired
 };
