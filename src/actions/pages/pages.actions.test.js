@@ -3,12 +3,12 @@ import {SET_PAGES_DATA_ACTION} from './pages.constants';
 
 describe('Pages actions', () => {
 
-    it('Contains right constant', () => {
+    it('setPagesDataAction contains right constant', () => {
         expect(setPagesDataAction(undefined))
             .toEqual(expect.objectContaining({type: SET_PAGES_DATA_ACTION}));
     });
 
-    it('Contains right payload', () => {
+    it('setPagesDataAction contains right payload', () => {
         const payload = {test: 'test'};
 
         expect(setPagesDataAction(payload))

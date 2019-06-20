@@ -1,0 +1,12 @@
+.menu_item_component_title {
+    cursor: pointer;
+    text-decoration: none;
+    color: #343434;
+    padding: 6px 5px 6px 0;
+    font-size: 14px;
+    line-height: 19px;
+}
+
+.menu_item_component_title:hover {
+    text-decoration: underline;
+}

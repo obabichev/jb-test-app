@@ -1,11 +1,11 @@
 import React from 'react';
 import {Store} from './components/Store/Store';
-import {MainPageContainer} from './containers/MainPageContainer';
+import {AppRouter} from './components/AppRouter';
 
 function App() {
     return (
         <Store>
-            <MainPageContainer/>
+            <AppRouter/>
         </Store>
     );
 }
