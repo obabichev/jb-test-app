@@ -8,7 +8,6 @@ import './NavigationTree.css';
 export class NavigationTree extends Component {
 
     render() {
-        console.log('[obabichev] this.props', this.props);
         return <div className="navigation_tree_container">
             <TreeViewComponent data={this.props.data}
                                renderItem={this.renderMenuItem}

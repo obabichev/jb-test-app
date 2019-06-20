@@ -11,7 +11,7 @@ export class TreeNodeComponent extends Component {
         super(props);
 
         this.state = {
-            isExtended: false,
+            isExtended: props.allExtended || false,
         }
     }
 
@@ -39,7 +39,9 @@ export class TreeNodeComponent extends Component {
     };
 
     renderContent = () => {
-        if (this.isExtendable()) {
+        const {hideExtendedButton} = this.props;
+
+        if (!hideExtendedButton && this.isExtendable()) {
             return <ExpandButtonWrapper
                 isExtended={this.state.isExtended}
                 onExtendedToggle={this.onExtendedToggle}>
@@ -80,7 +82,9 @@ export class TreeNodeComponent extends Component {
             children={item.children}
             renderItem={this.props.renderItem}
             selectedItem={this.props.selectedItem}
-            level={item.level}/>
+            level={item.level}
+            hideExtendedButton={this.props.hideExtendedButton}
+            allExtended={this.props.allExtended}/>
     };
 
     isExtendable = () => {
@@ -100,5 +104,7 @@ TreeNodeComponent.propTypes = {
     id: PropTypes.string.isRequired,
     children: PropTypes.array,
     renderItem: PropTypes.func.isRequired,
-    level: PropTypes.number
+    level: PropTypes.number,
+    hideExtendedButton: PropTypes.bool,
+    allExtended: PropTypes.bool
 };

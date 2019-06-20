@@ -22,12 +22,16 @@ export class TreeViewComponent extends Component {
             level={item.level}
             children={item.children}
             renderItem={this.props.renderItem}
-            selectedItem={this.props.selectedItem}/>
+            selectedItem={this.props.selectedItem}
+            hideExtendedButton={this.props.hideExtendedButton}
+            allExtended={this.props.allExtended}/>
     }
 }
 
 TreeViewComponent.propTypes = {
     data: PropTypes.array.isRequired,
     renderItem: PropTypes.func.isRequired,
-    selectedItem: PropTypes.string
+    selectedItem: PropTypes.string,
+    hideExtendedButton: PropTypes.bool,
+    allExtended: PropTypes.bool
 };

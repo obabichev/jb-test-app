@@ -11,6 +11,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     setCurrentPage: (pageId) => dispatch(setCurrentPageAction(pageId)),
+
 });
 
 export const MenuItemContainer = connect(mapStateToProps, mapDispatchToProps)(MenuItemComponent);
