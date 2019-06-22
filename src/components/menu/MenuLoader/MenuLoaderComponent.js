@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {TreeViewComponent} from '../../tree/TreeViewComponent/TreeViewComponent';
 
 import styles from './MenuLoaderComponent.module.scss';
+import {FadeInAnimation} from '../../animations/FadeInAnimation/FadeInAnimation';
 
 const LOADER_MENU_STRUCTURE = [
     {
@@ -34,7 +35,9 @@ export class MenuLoaderComponent extends Component {
     }
 
     renderItem = () => {
-        return <div style={{backgroundColor: '#EBEBEB', width: 200, height: 13, margin: 10}}/>;
+        return <FadeInAnimation>
+            <div className={styles.loader_item}/>
+        </FadeInAnimation>;
     }
 
 }

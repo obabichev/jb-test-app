@@ -1,0 +1,16 @@
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.container {
+  animation: fadein 1.5s ease-out infinite;
+}

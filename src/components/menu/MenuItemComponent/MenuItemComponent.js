@@ -5,6 +5,7 @@ import {MenuAnchorContainer} from '../../../containers/menu/MenuAnchorContainer'
 import {MenuTitleComponent} from '../MenuTitleComponent/MenuTitleComponent';
 
 import styles from './MenuItemComponent.module.scss';
+import {SlideDownAnimation} from '../../animations/ListAppearAnimation/SlideDownAnimation';
 
 export class MenuItemComponent extends Component {
 
@@ -14,7 +15,9 @@ export class MenuItemComponent extends Component {
                 {this.renderContent()}
             </div>
             <div>
-                {this.renderAnchors()}
+                <SlideDownAnimation>
+                    {this.renderAnchors()}
+                </SlideDownAnimation>
             </div>
         </div>
     }

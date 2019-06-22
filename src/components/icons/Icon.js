@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const Icon = props => (
-    <img width={props.width} height={props.height} src={`/icons/${props.icon}.svg`}/>
+    <img width={props.width} height={props.height} src={`/icons/${props.icon}.svg`}
+         alt="icon"/>
 );
 
 Icon.propTypes = {

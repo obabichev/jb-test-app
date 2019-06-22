@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+}
+
+.rotation_enabled {
+  transform: rotate(180deg);
+  transition-duration: 500ms;
+}
+
+.rotation_disabled {
+  transform: rotate(0);
+  transition-duration: 500ms;
+}

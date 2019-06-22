@@ -4,6 +4,7 @@ import {ExpandButtonWrapper} from '../ExpandButtonWrapper/ExpandButtonWrapper';
 import classNames from 'classnames/bind';
 
 import styles from './TreeNodeComponent.module.scss';
+import {SlideDownAnimation} from '../../animations/ListAppearAnimation/SlideDownAnimation';
 
 const cx = classNames.bind(styles);
 
@@ -21,9 +22,11 @@ export class TreeNodeComponent extends Component {
     }
 
     render() {
-        return <div>
+        return <div style={{overflow: 'hidden'}}>
             {this.renderContent()}
-            {this.renderChildren()}
+            <SlideDownAnimation>
+                {this.renderChildren()}
+            </SlideDownAnimation>
         </div>;
     }
 
