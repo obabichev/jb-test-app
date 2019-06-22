@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {TreeNodeComponent} from './TreeNodeComponent';
+import {TreeNodeComponent} from '../TreeNodeComponent/TreeNodeComponent';
 
 /**
  * This component allows to render tree elements structure
@@ -23,8 +23,8 @@ export class TreeViewComponent extends Component {
             children={item.children}
             renderItem={this.props.renderItem}
             selectedItem={this.props.selectedItem}
-            hideExtendedButton={this.props.hideExtendedButton}
-            allExtended={this.props.allExtended}/>
+            hideExpandButton={this.props.hideExpandButton}
+            allExpanded={this.props.allExpanded}/>
     }
 }
 
@@ -32,6 +32,6 @@ TreeViewComponent.propTypes = {
     data: PropTypes.array.isRequired,
     renderItem: PropTypes.func.isRequired,
     selectedItem: PropTypes.string,
-    hideExtendedButton: PropTypes.bool,
-    allExtended: PropTypes.bool
+    hideExpandButton: PropTypes.bool,
+    allExpanded: PropTypes.bool
 };

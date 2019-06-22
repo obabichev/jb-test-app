@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {TreeViewComponent} from '../../tree/TreeViewComponent';
+import {TreeViewComponent} from '../../tree/TreeViewComponent/TreeViewComponent';
 
-import './MenuLoaderComponent.css';
+import styles from './MenuLoaderComponent.module.scss';
 
 const LOADER_MENU_STRUCTURE = [
     {
@@ -25,11 +25,11 @@ const LOADER_MENU_STRUCTURE = [
 export class MenuLoaderComponent extends Component {
 
     render() {
-        return <div className="menu_loader_container">
+        return <div className={styles.container}>
             <TreeViewComponent data={LOADER_MENU_STRUCTURE}
                                renderItem={this.renderItem}
-                               hideExtendedButton
-                               allExtended/>
+                               hideExpandButton
+                               allExpanded/>
         </div>;
     }
 

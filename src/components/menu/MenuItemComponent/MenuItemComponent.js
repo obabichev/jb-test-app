@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import './MenuItemComponent.css';
 import {MenuAnchorContainer} from '../../../containers/menu/MenuAnchorContainer';
 import {MenuTitleComponent} from '../MenuTitleComponent/MenuTitleComponent';
+
+import styles from './MenuItemComponent.module.scss';
 
 export class MenuItemComponent extends Component {
 
@@ -40,7 +41,7 @@ export class MenuItemComponent extends Component {
             return null;
         }
 
-        return <div>
+        return <div className={styles.anchors_container}>
             {anchors.map(this.renderAnchor)}
         </div>;
     };
