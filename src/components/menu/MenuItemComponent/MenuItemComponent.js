@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Link} from "react-router-dom";
 
 import './MenuItemComponent.css';
 import {MenuAnchorContainer} from '../../../containers/menu/MenuAnchorContainer';
+import {MenuTitleComponent} from '../MenuTitleComponent/MenuTitleComponent';
 
 export class MenuItemComponent extends Component {
 
@@ -19,30 +19,14 @@ export class MenuItemComponent extends Component {
     }
 
     renderContent = () => {
-        const {url} = this.props.menuItem;
-        if (url) {
-            return <div>
-                <Link onClick={this.onClick} className={this.titleClassName()} to={url}>
-                    {this.renderCard()}
-                </Link>
-            </div>;
-        } else {
-            return <div onClick={this.onClick} className={this.titleClassName()}>
-                {this.renderCard()}
-            </div>;
-        }
-    };
-
-    titleClassName = () => {
+        const {title, url} = this.props.menuItem;
         const {isSelected} = this.props;
 
-        return `menu_item_component_title ${isSelected ? 'menu_item_component__selected_title' : ''}`;
-    };
-
-    renderCard = () => {
-        const {title} = this.props.menuItem;
-
-        return title;
+        return <MenuTitleComponent
+            title={title}
+            url={url}
+            onClick={this.onTitleClick}
+            isSelected={isSelected}/>;
     };
 
     renderAnchors = () => {
@@ -56,14 +40,21 @@ export class MenuItemComponent extends Component {
             return null;
         }
 
-        return anchors.map(this.renderAnchor)
+        return <div>
+            {anchors.map(this.renderAnchor)}
+        </div>;
     };
 
     renderAnchor = anchor => {
-        return <MenuAnchorContainer key={anchor.id} anchorId={anchor.id}/>;
+        return <MenuAnchorContainer
+            key={anchor.id}
+            anchorId={anchor.id}
+            title={anchor.title}
+            url={anchor.url + anchor.anchor}
+            onClick={this.onAnchorClick(anchor.id)}/>;
     };
 
-    onClick = () => {
+    onTitleClick = () => {
         const {setExpanded, setCurrentPage} = this.props;
         const {id} = this.props.menuItem;
 
@@ -73,6 +64,10 @@ export class MenuItemComponent extends Component {
             setExpanded(true);
         }
     };
+
+    onAnchorClick = anchorId => () => {
+        this.props.setCurrentAnchor(anchorId);
+    };
 }
 
 MenuItemComponent.propTypes = {
@@ -81,9 +76,9 @@ MenuItemComponent.propTypes = {
         title: PropTypes.string.isRequired,
         url: PropTypes.string
     }),
+    anchors: PropTypes.array.isRequired,
     isSelected: PropTypes.bool,
     setExpanded: PropTypes.func,
     setCurrentPage: PropTypes.func,
     setCurrentAnchor: PropTypes.func,
-    anchors: PropTypes.array.isRequired,
 };

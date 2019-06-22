@@ -1,25 +1,38 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 
-import './MenuAnchorComponent.css';
+import styles from './MenuAnchorComponent.module.scss';
+
+const cx = classNames.bind(styles);
 
 export class MenuAnchorComponent extends Component {
 
     render() {
-        const {anchor} = this.props;
-        return <div key={anchor.id} onClick={this.onAnchorClick(anchor.id)} style={{paddingLeft: 20}}>
-            <a className={this.titleClassName()} href={anchor.url + anchor.anchor}>
-                {anchor.title}
+        const {title, url, isSelected} = this.props;
+
+        const className = cx({
+            title: true,
+            selected: isSelected
+        });
+
+        return <div onClick={this.onClick}>
+            <a className={className} href={url}>
+                {title}
             </a>
         </div>;
     }
 
-    titleClassName = () => {
-        const {isAnchorSelected} = this.props;
-
-        return `menu-anchor-component_title ${isAnchorSelected ? 'menu-anchor-component_title_selected' : ''}`
-    };
-
-    onAnchorClick = (anchorId) => () => {
-        this.props.setCurrentAnchor(anchorId);
+    onClick = () => {
+        if (this.props.onClick) {
+            this.props.onClick();
+        }
     }
 }
+
+MenuAnchorComponent.propTypes = {
+    title: PropTypes.string,
+    url: PropTypes.string,
+    isSelected: PropTypes.bool,
+    onClick: PropTypes.func
+};

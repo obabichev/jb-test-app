@@ -2,7 +2,7 @@ import pages from './pages';
 
 export const getPagesListRequest = async () => {
 
-    await waitPromise();
+    // await waitPromise();
 
     const {entities, topLevelIds} = pages;
     return {...entities, topLevelIds};

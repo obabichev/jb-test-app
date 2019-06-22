@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {MenuItemComponent} from '../../components/menu/MenuItemComponent/MenuItemComponent';
 import {menuItemByPageIdSelector} from '../../selectors/navigation/navigation';
-import {setCurrentPageAction} from '../../actions/navigation/navigation.actions';
+import {setCurrentAnchorAction, setCurrentPageAction} from '../../actions/navigation/navigation.actions';
 import {anchorsByPageIdSelector} from '../../selectors/pages/anchors';
 
 const mapStateToProps = (state, props) => ({
@@ -11,7 +11,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     setCurrentPage: (pageId) => dispatch(setCurrentPageAction(pageId)),
-
+    setCurrentAnchor: (anchorId) => dispatch(setCurrentAnchorAction(anchorId))
 });
 
 export const MenuItemContainer = connect(mapStateToProps, mapDispatchToProps)(MenuItemComponent);
