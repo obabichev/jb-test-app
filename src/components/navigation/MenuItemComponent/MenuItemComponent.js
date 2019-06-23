@@ -24,13 +24,14 @@ export class MenuItemComponent extends Component {
 
     renderContent = () => {
         const {title, url} = this.props.menuItem;
-        const {isSelected} = this.props;
+        const {isSelected, isSelectedByKeyboard} = this.props;
 
         return <MenuTitleComponent
             title={title}
             url={url}
             onClick={this.onTitleClick}
-            isSelected={isSelected}/>;
+            isSelected={isSelected}
+            isSelectedByKeyboard={isSelectedByKeyboard}/>;
     };
 
     renderAnchors = () => {
@@ -85,4 +86,5 @@ MenuItemComponent.propTypes = {
     setExpanded: PropTypes.func,
     setCurrentPage: PropTypes.func,
     setCurrentAnchor: PropTypes.func,
+    isSelectedByKeyboard: PropTypes.bool
 };

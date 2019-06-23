@@ -12,19 +12,17 @@ export class TreeViewComponent extends Component {
         super(props);
 
         this.state = {
-            kselected: null,
-            direction: null
+            keyboardSelection: null
         };
 
         this.references = {};
     }
 
-    componentDidMount() {
-        window.addEventListener('keydown', this.onKeyDown, false);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('keydown', this.onKeyDown, false);
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {selectedItem} = this.props;
+        if (prevProps.selectedItem !== selectedItem) {
+            this.setKeyboardSelection(selectedItem);
+        }
     }
 
     render() {
@@ -34,25 +32,6 @@ export class TreeViewComponent extends Component {
             {data.map(this.renderNode)}
         </div>;
     }
-
-    flattenDataStructure = (data) => {
-        const result = {};
-
-        const iterate = item => {
-            result[item.id] = {
-                ...item,
-                children: item.children ? item.children.map(child => child.id) : []
-            };
-
-            if (item.children) {
-                item.children.forEach(iterate);
-            }
-        };
-
-        data.forEach(iterate);
-
-        return result;
-    };
 
     renderNode = (item, index) => {
         return <TreeNodeComponent
@@ -65,79 +44,43 @@ export class TreeViewComponent extends Component {
             selectedItem={this.props.selectedItem}
             hideExpandButton={this.props.hideExpandButton}
             allExpanded={this.props.allExpanded}
-            kselected={this.state.kselected}
-            setKselected={this.setKselected}
-            moveDown={this.moveDown}
-            moveUp={this.moveUp}
-            direction={this.state.direction}
+            keyboardSelection={this.state.keyboardSelection}
+            setKeyboardSelection={this.setKeyboardSelection}
             index={index}
-            nMoveDown={this.nMoveDown}
-            nMoveUp={this.nMoveUp}
+            keyboardMoveDown={this.keyboardMoveDown}
+            keyboardMoveUp={this.keyboardMoveUp}
+            onSelectItem={this.props.onSelectItem}
         />;
     };
 
-    onFocus = () => {
-        const {data} = this.props;
-        if (data.length > 0) {
-            this.setState({
-                kselected: data[0].id
-            })
-        }
+    // onFocus = () => {
+    //     const {data} = this.props;
+    //     if (data.length > 0) {
+    //         this.setState({
+    //             keyboardSelection: data[0].id
+    //         })
+    //     }
+    // };
+    //
+    // onBlur = () => {
+    // };
+
+    setKeyboardSelection = (id) => {
+        setTimeout(() => this.setState({keyboardSelection: id}), 0);
     };
 
-    onBlur = () => {
-    };
-
-    moveDown = (idFrom) => {
-        const {data} = this.props;
-
-        let i = 0;
-        for (let j = 0; j < data.length; j++) {
-            if (data[j].id === idFrom) {
-                i = j;
-            }
-        }
-        i++;
-
-        if (i < data.length) {
-            this.setKselected(data[i].id, 'down');
-        }
-    };
-
-    moveUp = (idFrom) => {
-        const {data} = this.props;
-
-        let i = 0;
-        for (let j = 0; j < data.length; j++) {
-            if (data[j].id === idFrom) {
-                i = j;
-            }
-        }
-        i--;
-
-        if (i >= 0) {
-            this.setKselected(data[i].id, 'up');
-        }
-    };
-
-    setKselected = (id, direction = null) => {
-        setTimeout(() => this.setState({kselected: id, direction}), 0);
-    };
-
-    nMoveDown = (index) => {
+    keyboardMoveDown = (index) => {
         const {data} = this.props;
         if (index < data.length - 1) {
-            this.setKselected(data[index + 1].id);
+            this.setKeyboardSelection(data[index + 1].id);
         }
     };
 
-    nMoveUp = (index) => {
+    keyboardMoveUp = (index) => {
         const {data} = this.props;
         if (index > 0) {
-            this.setKselected(data[index - 1].id);
+            this.references[data[index - 1].id].onKeyboardMovedFromBottom();
         }
-        // this.references[data[index - 1].id].movedFromBottom();
-        // }
     }
 }
 
@@ -146,5 +89,6 @@ TreeViewComponent.propTypes = {
     renderItem: PropTypes.func.isRequired,
     selectedItem: PropTypes.string,
     hideExpandButton: PropTypes.bool,
-    allExpanded: PropTypes.bool
+    allExpanded: PropTypes.bool,
+    onSelectItem: PropTypes.func
 };

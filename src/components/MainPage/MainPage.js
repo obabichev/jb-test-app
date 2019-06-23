@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import './MainPage.css';
 import {MenuLoaderComponent} from '../navigation/MenuLoader/MenuLoaderComponent';
-import {NavigationSidebarComponent} from '../navigation/NavigationSidebarComponent';
+import {NavigationSidebarContainer} from '../../containers/navigation/NavigationSidebarContainer';
 
 export class MainPage extends Component {
 
@@ -23,7 +23,7 @@ export class MainPage extends Component {
             return <MenuLoaderComponent/>
         }
 
-        return <NavigationSidebarComponent
+        return <NavigationSidebarContainer
             data={this.props.pagesStructure}
             selectedMenuItem={this.props.selectedMenuItem}/>;
     }

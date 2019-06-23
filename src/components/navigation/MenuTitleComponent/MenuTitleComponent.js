@@ -11,11 +11,12 @@ const cx = classNames.bind(styles);
 export class MenuTitleComponent extends Component {
 
     render() {
-        const {title, url, isSelected} = this.props;
+        const {title, url, isSelected, isSelectedByKeyboard} = this.props;
 
         const className = cx({
             button: true,
-            selected: isSelected
+            selected: isSelected,
+            selectedByKeyboard: isSelectedByKeyboard && !isSelected
         });
 
         if (url) {
@@ -43,5 +44,6 @@ MenuTitleComponent.propTypes = {
     title: PropTypes.string,
     url: PropTypes.string,
     onClick: PropTypes.func,
-    isSelected: PropTypes.bool
+    isSelected: PropTypes.bool,
+    isSelectedByKeyboard: PropTypes.bool
 };

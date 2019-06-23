@@ -12,20 +12,23 @@ export class NavigationTree extends Component {
         return <div className={styles.container}>
             <TreeViewComponent data={this.props.data}
                                renderItem={this.renderMenuItem}
-                               selectedItem={this.props.selectedMenuItem}/>
+                               selectedItem={this.props.selectedMenuItem}
+                               onSelectItem={this.props.onSelectItem}/>
         </div>;
     }
 
-    renderMenuItem = (pageId, setExpanded) => {
+    renderMenuItem = (pageId, setExpanded, isSelectedByKeyboard) => {
         const {selectedMenuItem} = this.props;
         return <MenuItemContainer
             pageId={pageId}
             isSelected={selectedMenuItem === pageId}
-            setExpanded={setExpanded}/>
+            setExpanded={setExpanded}
+            isSelectedByKeyboard={isSelectedByKeyboard}/>
     };
 }
 
 NavigationTree.propTypes = {
     data: PropTypes.array.isRequired,
-    selectedMenuItem: PropTypes.string
+    selectedMenuItem: PropTypes.string,
+    onSelectItem: PropTypes.func
 };

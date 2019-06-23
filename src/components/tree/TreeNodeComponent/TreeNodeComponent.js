@@ -12,6 +12,7 @@ const KEY_LEFT = 37;
 const KEY_UP = 38;
 const KEY_RIGHT = 39;
 const KEY_DOWN = 40;
+const KEY_ENTER = 13;
 
 /**
  * This class used by TreeViewComponent to display data recursively
@@ -22,10 +23,27 @@ export class TreeNodeComponent extends Component {
         super(props);
 
         this.state = {
-            isExpanded: props.allExpanded || false
+            isExpanded: (this.isExpandable() && props.allExpanded) || false
         };
 
+        this.contentReference = null;
         this.references = {};
+
+        this.keyListeners = {
+            [KEY_LEFT]: this.onLeftPress,
+            [KEY_RIGHT]: this.onRightPress,
+            [KEY_UP]: this.onUpPress,
+            [KEY_DOWN]: this.onDownPress,
+            [KEY_ENTER]: this.onEnterPress
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {keyboardSelection, id} = this.props;
+
+        if (keyboardSelection !== prevProps.keyboardSelection && keyboardSelection === id) {
+            this.scrollToActiveElement();
+        }
     }
 
     componentDidMount() {
@@ -34,16 +52,6 @@ export class TreeNodeComponent extends Component {
 
     componentWillUnmount() {
         window.removeEventListener('keydown', this.onKeyDown, false);
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-
-        if (prevProps.kselected !== this.props.kselected &&
-            this.props.kselected === this.props.id
-            && this.props.direction === 'up'
-            && this.state.isExpanded) {
-            this.props.setKselected(this.props.children[this.props.children.length - 1].id, 'up');
-        }
     }
 
     render() {
@@ -63,10 +71,10 @@ export class TreeNodeComponent extends Component {
             [`level${level}_content_container`]: true
         });
 
-        return <div className={contentContainerClassName}>
-            {this.props.kselected === this.props.id ? "(k)" : null}
+        return <div ref={refId => this.contentReference = refId}
+                    className={contentContainerClassName}>
             <ExpandButtonWrapper
-                hideButton={hideExpandButton || !this.isExtendable()}
+                hideButton={hideExpandButton || !this.isExpandable()}
                 isExpanded={this.state.isExpanded}
                 onExpandToggle={this.onExpandToggle}>
                 {this.renderCard()}
@@ -75,16 +83,18 @@ export class TreeNodeComponent extends Component {
     };
 
     renderCard = () => {
-        const {id, renderItem} = this.props;
+        const {id, renderItem, keyboardSelection} = this.props;
 
-        return renderItem(id, this.setExpanded)
+        const isSelectedByKeyboard = id === keyboardSelection;
+
+        return renderItem(id, this.setExpanded, isSelectedByKeyboard);
     };
 
     renderChildren = () => {
         const {isExpanded} = this.state;
         const {children} = this.props;
 
-        if (!this.isExtendable()) {
+        if (!this.isExpandable()) {
             return null;
         }
 
@@ -108,18 +118,16 @@ export class TreeNodeComponent extends Component {
             level={item.level}
             hideExpandButton={this.props.hideExpandButton}
             allExpanded={this.props.allExpanded}
-            kselected={this.props.kselected}
-            setKselected={this.props.setKselected}
-            moveDown={this.moveDown}
-            moveUp={this.moveUp}
-            leftToParent={this.leftToParent}
-            direction={this.props.direction}
+            keyboardSelection={this.props.keyboardSelection}
+            setKeyboardSelection={this.props.setKeyboardSelection}
+            onKeyboardMoveLeft={this.onKeyboardMoveLeft}
             index={index}
-            nMoveDown={this.nMoveDown}
-            nMoveUp={this.nMoveUp}/>
+            keyboardMoveDown={this.keyboardMoveDown}
+            keyboardMoveUp={this.keyboardMoveUp}
+            onSelectItem={this.props.onSelectItem}/>
     };
 
-    isExtendable = () => {
+    isExpandable = () => {
         const {children} = this.props;
 
         return children && children.length > 0;
@@ -130,91 +138,113 @@ export class TreeNodeComponent extends Component {
     };
 
     setExpanded = isExpanded => {
-        this.setState({isExpanded: this.isExtendable() && isExpanded});
+        this.setState({isExpanded: this.isExpandable() && isExpanded});
     };
 
     onKeyDown = (event) => {
-        const {kselected, id, children} = this.props;
+        const {keyboardSelection, id} = this.props;
+
+        if (keyboardSelection !== id) {
+            return;
+        }
+
+        const listener = this.keyListeners[event.keyCode];
+
+        if (listener) {
+            event.preventDefault();
+            listener();
+        }
+    };
+
+    onLeftPress = () => {
+        if (!this.state.isExpanded && this.props.onKeyboardMoveLeft) {
+            this.props.onKeyboardMoveLeft();
+            return;
+        }
+
+        this.setExpanded(false);
+    };
+
+    onRightPress = () => {
+        if (this.isExpandable()) {
+            this.setExpanded(true);
+        }
+    };
+
+    onUpPress = () => {
+        const {keyboardMoveUp, index} = this.props;
+
+        keyboardMoveUp(index);
+    };
+
+    onDownPress = () => {
+        const {setKeyboardSelection, children, keyboardMoveDown, index} = this.props;
         const {isExpanded} = this.state;
 
-        if (event.keyCode === KEY_DOWN && kselected === id) {
-            event.preventDefault();
-
-            // if (!isExpanded) {
-            //     this.props.moveDown(this.props.id);
-            // } else {
-            //     this.props.setKselected(children[0].id, 'down');
-            // }
-
-            if (isExpanded) {
-                this.props.setKselected(children[0].id);
-            } else {
-                this.props.nMoveDown(this.props.index);
-            }
-        }
-
-        if (event.keyCode === KEY_UP && kselected === id) {
-            event.preventDefault();
-
-            // this.props.moveUp(this.props.id);
-            this.props.nMoveUp(this.props.index);
-        }
-
-        if (event.keyCode === KEY_RIGHT && kselected === id) {
-            event.preventDefault();
-
-
-            if (this.isExtendable()) {
-                this.setExpanded(true);
-            }
-        }
-
-        if (event.keyCode === KEY_LEFT && kselected === id) {
-            event.preventDefault();
-
-            if ((!this.isExtendable() || !this.state.isExpanded) && this.props.leftToParent) {
-                this.props.leftToParent();
-                return;
-            }
-
-            this.setExpanded(false);
+        if (isExpanded) {
+            setKeyboardSelection(children[0].id);
+        } else {
+            keyboardMoveDown(index);
         }
     };
 
-    leftToParent = () => {
-        this.props.setKselected(this.props.id);
+    onEnterPress = () => {
+        const {onSelectItem, id} = this.props;
+
+        this.setExpanded(true);
+
+        if (onSelectItem) {
+            onSelectItem(id);
+        }
     };
 
-    nMoveDown = (index) => {
+    onKeyboardMoveLeft = () => {
+        this.props.setKeyboardSelection(this.props.id);
+    };
+
+    keyboardMoveDown = (index) => {
         const {children} = this.props;
         if (index < children.length - 1) {
-            this.props.setKselected(children[index + 1].id);
+            this.props.setKeyboardSelection(children[index + 1].id);
         } else {
-            this.props.nMoveDown(this.props.index);
+            this.props.keyboardMoveDown(this.props.index);
         }
     };
 
-    nMoveUp = (index) => {
+    keyboardMoveUp = (index) => {
         const {children} = this.props;
         if (index > 0) {
-            // this.props.setKselected(children[index - 1].id);
-            this.references[children[index - 1].id].movedFromBottom();
+            this.references[children[index - 1].id].onKeyboardMovedFromBottom();
         } else {
-            // this.props.nMoveUp(this.props.index);
-            this.props.setKselected(this.props.id);
+            this.props.setKeyboardSelection(this.props.id);
         }
     };
 
-    movedFromBottom = () => {
+    /**
+     * this function is used for direct call from parent
+     */
+    onKeyboardMovedFromBottom = () => {
         const {isExpanded} = this.state;
         const {children} = this.props;
 
         if (isExpanded) {
-            console.log('[obabichev] TRUE children', children);
-            this.references[children[children.length - 1].id].movedFromBottom();
+            this.references[children[children.length - 1].id].onKeyboardMovedFromBottom();
         } else {
-            console.log('[obabichev] FALSE children', children);
-            this.props.setKselected(this.props.id);
+            this.props.setKeyboardSelection(this.props.id);
+        }
+    };
+
+    scrollToActiveElement = () => {
+        const offsetTop = this.contentReference.offsetTop;
+
+        const diff = offsetTop - window.pageYOffset;
+
+        if (diff > window.innerHeight || diff < 0) {
+            window.scroll({
+                top: offsetTop - 200,
+                left: 0,
+                behavior: 'smooth'
+            });
         }
     }
 }
@@ -226,10 +256,10 @@ TreeNodeComponent.propTypes = {
     level: PropTypes.number,
     hideExpandButton: PropTypes.bool,
     allExpanded: PropTypes.bool,
-    kselected: PropTypes.string,
-    setKselected: PropTypes.func,
-    moveDown: PropTypes.func,
-    moveUp: PropTypes.func,
-    leftToParent: PropTypes.func,
-    direction: PropTypes.any
+    keyboardSelection: PropTypes.string,
+    setKeyboardSelection: PropTypes.func,
+    onKeyboardMoveLeft: PropTypes.func,
+    keyboardMoveDown: PropTypes.func,
+    keyboardMoveUp: PropTypes.func,
+    onSelectItem: PropTypes.func
 };

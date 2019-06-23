@@ -12,10 +12,14 @@ export class NavigationSidebarComponent extends Component {
             <NavigationSearchContainer/>
             <NavigationTree
                 data={this.props.data}
-                selectedMenuItem={this.props.selectedMenuItem}/>
+                selectedMenuItem={this.props.selectedMenuItem}
+                onSelectItem={this.setCurrentPage}/>
         </div>;
     }
 
+    setCurrentPage = (id) => {
+        this.props.setCurrentPage(id);
+    }
 }
 
 NavigationSidebarComponent.propTypes = {
