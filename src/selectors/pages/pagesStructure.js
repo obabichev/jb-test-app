@@ -29,9 +29,7 @@ export const filteredPagesStructureSelector = createSelector(
     pagesSelector,
     searchInputSelector,
     (structure, pages, searchInput) => {
-        const result = structure.map(filterTreeStructure(pages, searchInput)).filter(notEmpty);
-
-        return result;
+        return structure.map(filterTreeStructure(pages, searchInput)).filter(notEmpty);
     }
 );
 
