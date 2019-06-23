@@ -1,20 +1,18 @@
+@import "../../../styles/colors";
+@import "../../../styles/fonts";
+
 .button {
+  @extend %common-text;
   cursor: pointer;
-  text-decoration: none;
-  color: #343434;
   padding-top: 6px;
   padding-bottom: 6px;
-  font-size: 14px;
-  font-family: "Open Sans", serif;
   display: block;
-  letter-spacing: -0.1px;
 }
 
 .selected {
-  font-weight: 700;
-  letter-spacing: -0.4px;
+  @extend %common-bold-text;
 }
 
 .selectedByKeyboard {
-  color: #008eff
+  color: $primary-color
 }

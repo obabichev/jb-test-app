@@ -8,4 +8,4 @@ export const getPagesListRequest = async () => {
     return {...entities, topLevelIds};
 };
 
-const waitPromise = () => new Promise(resolve => setTimeout(() => resolve(), 5000));
+const waitPromise = () => new Promise(resolve => setTimeout(() => resolve(), 3000));

@@ -55,7 +55,7 @@ export class TreeNodeComponent extends Component {
     }
 
     render() {
-        return <div style={{overflow: 'hidden'}}>
+        return <div className={styles.container}>
             {this.renderContent()}
             <SlideDownAnimation>
                 {this.renderChildren()}

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-
-import './MainPage.css';
 import {MenuLoaderComponent} from '../navigation/MenuLoader/MenuLoaderComponent';
 import {NavigationSidebarContainer} from '../../containers/navigation/NavigationSidebarContainer';
+
+import styles from './MainPage.module.scss';
 
 export class MainPage extends Component {
 
@@ -11,8 +11,12 @@ export class MainPage extends Component {
     }
 
     render() {
-        return <div className="main_page_container">
-            {this.renderNavigationMenu()}
+        return <div className={styles.container}>
+            <div>
+                {this.renderNavigationMenu()}
+            </div>
+            <div>
+            </div>
         </div>;
     }
 

@@ -4,8 +4,6 @@ import classNames from 'classnames/bind';
 
 import styles from './RotateAnimation.module.scss';
 
-// import {RotateAnimation} from '../../animations/RotateAnimation/RotateAnimation';
-
 const cx = classNames.bind(styles);
 
 export class RotateAnimation extends Component {

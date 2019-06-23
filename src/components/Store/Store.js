@@ -12,8 +12,6 @@ const enhancers = compose(
 const store = createStore(
     rootReducer,
     enhancers
-    // applyMiddleware(thunk),
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 export const Store = (props) => (<Provider store={store}>

@@ -1,10 +1,13 @@
+@import "../../../styles/colors";
+
 .container {
-  background-color: #fafafa;
-  width: 304px;
+  background-color: $navigation-background-color;
+  width: 300px;
+  height: 100%;
 }
 
 .loader_item {
-  background-color: #EBEBEB;
+  background-color: $navigation-loader-item-color;
   width: 200px;
   height: 13px;
   margin: 10px

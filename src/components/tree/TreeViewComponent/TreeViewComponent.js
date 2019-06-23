@@ -53,18 +53,6 @@ export class TreeViewComponent extends Component {
         />;
     };
 
-    // onFocus = () => {
-    //     const {data} = this.props;
-    //     if (data.length > 0) {
-    //         this.setState({
-    //             keyboardSelection: data[0].id
-    //         })
-    //     }
-    // };
-    //
-    // onBlur = () => {
-    // };
-
     setKeyboardSelection = (id) => {
         setTimeout(() => this.setState({keyboardSelection: id}), 0);
     };
