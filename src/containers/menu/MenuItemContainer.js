@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {MenuItemComponent} from '../../components/menu/MenuItemComponent/MenuItemComponent';
+import {MenuItemComponent} from '../../components/navigation/MenuItemComponent/MenuItemComponent';
 import {menuItemByPageIdSelector} from '../../selectors/navigation/navigation';
 import {setCurrentAnchorAction, setCurrentPageAction} from '../../actions/navigation/navigation.actions';
 import {anchorsByPageIdSelector} from '../../selectors/pages/anchors';

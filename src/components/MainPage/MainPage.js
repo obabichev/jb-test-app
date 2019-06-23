@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
 import './MainPage.css';
-import {MenuLoaderComponent} from '../menu/MenuLoader/MenuLoaderComponent';
-import {NavigationTree} from '../menu/NavigationTree/NavigationTree';
+import {MenuLoaderComponent} from '../navigation/MenuLoader/MenuLoaderComponent';
+import {NavigationSidebarComponent} from '../navigation/NavigationSidebarComponent';
 
 export class MainPage extends Component {
 
@@ -23,9 +23,8 @@ export class MainPage extends Component {
             return <MenuLoaderComponent/>
         }
 
-        return <NavigationTree
+        return <NavigationSidebarComponent
             data={this.props.pagesStructure}
-            selectedPageId={this.props.selectedPageId}
             selectedMenuItem={this.props.selectedMenuItem}/>;
     }
 }

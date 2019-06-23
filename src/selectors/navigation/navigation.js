@@ -6,6 +6,8 @@ export const selectedMenuItemSelector = (state) => state.navigation.selectedPage
 
 export const selectedAnchorSelector = (state) => state.navigation.selectedPage.anchorId;
 
+export const searchInputSelector = (state) => state.navigation.searchInput;
+
 export const menuItemByPageIdSelector = createSelector(
     pageIdPropSelector,
     pagesSelector,

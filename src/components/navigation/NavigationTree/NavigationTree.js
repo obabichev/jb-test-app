@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import {TreeViewComponent} from '../../tree/TreeViewComponent/TreeViewComponent';
 import {MenuItemContainer} from '../../../containers/menu/MenuItemContainer';
@@ -23,3 +24,8 @@ export class NavigationTree extends Component {
             setExpanded={setExpanded}/>
     };
 }
+
+NavigationTree.propTypes = {
+    data: PropTypes.array.isRequired,
+    selectedMenuItem: PropTypes.string
+};

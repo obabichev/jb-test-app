@@ -1,7 +1,7 @@
 import {
     isAnchorSelectedSelector,
     menuItemByPageIdSelector,
-    pageIdByUrlSelector,
+    pageIdByUrlSelector, searchInputSelector,
     selectedMenuItemSelector
 } from './navigation';
 
@@ -10,7 +10,8 @@ const state = {
         selectedPage: {
             pageId: "test-selected-page-id",
             anchorId: "test-selected-anchor-id"
-        }
+        },
+        searchInput: "test-search-string"
     },
     pages: {
         pages: {
@@ -57,5 +58,10 @@ describe('Navigation selector', () => {
     it('isAnchorSelectedSelector, wrong id', () => {
         expect(isAnchorSelectedSelector(state, {anchorId: "wrong-id"}))
             .toEqual(false);
+    });
+
+    it('searchInputSelector', () => {
+        expect(searchInputSelector(state))
+            .toEqual("test-search-string")
     });
 });

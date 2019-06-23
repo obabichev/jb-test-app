@@ -58,11 +58,11 @@ export class TreeNodeComponent extends Component {
         const {isExpanded} = this.state;
         const {children} = this.props;
 
-        if (!isExpanded) {
+        if (!this.isExtendable()) {
             return null;
         }
 
-        if (!children) {
+        if (!isExpanded) {
             return null;
         }
 
@@ -84,7 +84,9 @@ export class TreeNodeComponent extends Component {
     };
 
     isExtendable = () => {
-        return !!this.props.children;
+        const {children} = this.props;
+
+        return children && children.length > 0;
     };
 
     onExpandToggle = () => {

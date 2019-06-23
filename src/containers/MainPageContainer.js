@@ -1,14 +1,13 @@
 import {connect} from 'react-redux';
 import {MainPage} from '../components/MainPage/MainPage';
-import {pagesStructureSelector} from '../selectors/pages/pagesStructure';
 import {withUrlFromRouter} from './withUrlFromRouter';
-import {pageIdByUrlSelector, selectedMenuItemSelector} from '../selectors/navigation/navigation';
+import {selectedMenuItemSelector} from '../selectors/navigation/navigation';
 import {uploadPagesDataAction} from '../actions/pages/pages.thunk.actions';
 import {isNavigationLoading} from '../selectors/loading/loading';
+import {filteredPagesStructureSelector} from '../selectors/pages/pagesStructure';
 
 const mapStateToProps = (state, props) => ({
-    pagesStructure: pagesStructureSelector(state),
-    selectedPageId: pageIdByUrlSelector(state, props),
+    pagesStructure: filteredPagesStructureSelector(state),
     selectedMenuItem: selectedMenuItemSelector(state),
     isLoading: isNavigationLoading(state)
 });

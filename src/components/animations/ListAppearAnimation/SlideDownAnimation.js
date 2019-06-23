@@ -7,14 +7,12 @@ export class SlideDownAnimation extends Component {
 
     render() {
         return <ReactCSSTransitionGroup
+            transitionLeave={false}
             transitionName={{
                 enter: styles.enter,
-                enterActive: styles.enterActive,
-                leave: styles.leave,
-                leaveActive: styles.leaveActive,
+                enterActive: styles.enterActive
             }}
             transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}
         >
             {this.props.children}
         </ReactCSSTransitionGroup>;

@@ -1,4 +1,4 @@
-import {setCurrentAnchorAction, setCurrentPageAction} from './navigation.actions';
+import {setCurrentAnchorAction, setCurrentPageAction, setSearchInputAction} from './navigation.actions';
 
 describe('Navigation actions', () => {
 
@@ -10,5 +10,10 @@ describe('Navigation actions', () => {
     it('setCurrentAnchorAction contains right payload', () => {
         expect(setCurrentAnchorAction("test-anchor-id"))
             .toEqual(expect.objectContaining({payload: {anchorId: "test-anchor-id"}}));
+    });
+
+    it('setSearchInputAction contains right payload', () => {
+        expect(setSearchInputAction("test-search-string"))
+            .toEqual(expect.objectContaining({payload: {searchInput: "test-search-string"}}));
     });
 });
