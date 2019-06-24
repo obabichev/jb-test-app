@@ -9,6 +9,10 @@
   display: block;
 }
 
+.button:hover {
+  text-decoration: underline;
+}
+
 .selected {
   @extend %common-bold-text;
 }

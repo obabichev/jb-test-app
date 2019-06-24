@@ -28,7 +28,7 @@ export class TreeViewComponent extends Component {
     render() {
         const {data} = this.props;
 
-        return <div onFocus={this.onFocus} onBlur={this.onBlur}>
+        return <div>
             {data.map(this.renderNode)}
         </div>;
     }
